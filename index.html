@@ -237,64 +237,134 @@
       </div>
     </section>
 
-    <!-- ========== GALERIA ========== -->
-    <section class="section section--offwhite" aria-labelledby="galeria-title">
+    <!-- ========== NOSSO ESPAÇO ========== -->
+    <section class="section section--espaco" id="nosso-espaco" aria-labelledby="espaco-title">
+      <div class="espaco-glow" aria-hidden="true"></div>
       <div class="container">
-        <div class="section-header">
-          <span class="eyebrow reveal">Nosso Espaço</span>
-          <h2 class="section-title reveal" id="galeria-title">Conheça nosso escritório</h2>
+        <div class="section-header section-header--left">
+          <span class="eyebrow reveal">Atmosfera Aposente</span>
+          <h2 class="section-title reveal" id="espaco-title">Um ambiente projetado para sua segurança e conforto</h2>
         </div>
-        <div class="gallery-grid" data-animate="stagger" data-stagger="120">
-          <figure class="gallery-item gallery-item--wide reveal">
-            <img src="Assets/aposente-entrada-toldo-amarelo.webp" alt="Fachada do escritório Aposente Campo Grande com toldo amarelo e placa Assessoria Previdenciária" loading="lazy" />
-          </figure>
-          <figure class="gallery-item gallery-item--tall reveal">
-            <img src="Assets/aposente-recepcao-balcao-logo.webp" alt="Recepção do escritório com balcão branco e parede de pastilhas amadeiradas" loading="lazy" />
-          </figure>
-          <figure class="gallery-item reveal">
-            <img src="Assets/aposente-sala-espera-clientes.webp" alt="Sala de espera com cadeiras de couro preto e banner Consulta Grátis INSS" loading="lazy" />
-          </figure>
-          <figure class="gallery-item gallery-item--wide reveal">
-            <img src="Assets/aposente-equipe-selfie-escritorio.webp" alt="Equipe completa da Aposente Campo Grande" loading="lazy" />
-          </figure>
-          <figure class="gallery-item reveal">
-            <img src="Assets/aposente-sala-reuniao-projetor.webp" alt="Detalhe decorativo do escritório com planta e luminária dourada" loading="lazy" />
-          </figure>
+        
+        <div class="espaco-grid">
+          <!-- 01: Fachada Jardim -->
+          <div class="espaco-item reveal" data-animate="fade-up">
+            <div class="glass-card card-fachada">
+              <span class="card-number">01</span>
+              <img src="Assets/aposente-entrada-toldo-amarelo.webp" alt="Entrada do escritório Aposente com toldo amarelo" loading="lazy" />
+              <div class="glass-caption">
+                <h3>Ambiente Externo</h3>
+                <p>Localização privilegiada com fácil acesso.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 02: Recepção -->
+          <div class="espaco-item reveal" data-animate="fade-up" style="transition-delay: 100ms">
+            <div class="glass-card">
+              <span class="card-number">02</span>
+              <img src="Assets/aposente-recepcao-balcao-logo.webp" alt="Recepção do escritório" loading="lazy" />
+              <div class="glass-caption">
+                <h3>Recepção</h3>
+                <p>Boas-vindas com conforto.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 03: Reunião -->
+          <div class="espaco-item reveal" data-animate="fade-up" style="transition-delay: 200ms">
+            <div class="glass-card">
+              <span class="card-number">03</span>
+              <img src="Assets/aposente-sala-reuniao-projetor.webp" alt="Sala de reuniões" loading="lazy" />
+              <div class="glass-caption">
+                <h3>Consultoria</h3>
+                <p>Privacidade total.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 04: Fachada Exterior / Número 220 -->
+          <div class="espaco-item reveal" data-animate="fade-up" style="transition-delay: 300ms">
+            <div class="glass-card card-numero">
+              <span class="card-number">04</span>
+              <img src="Assets/aposente-fachada-placa-assessoria.webp" alt="Placa de assessoria na fachada" loading="lazy" />
+              <div class="glass-caption">
+                <h3>Acesso Principal</h3>
+                <p>Rua Pardal, 220.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 05: Sala Operacional -->
+          <div class="espaco-item reveal" data-animate="fade-up" style="transition-delay: 400ms">
+            <div class="glass-card">
+              <span class="card-number">05</span>
+              <img src="Assets/aposente-equipe-sala-operacional.webp" alt="Equipe operacional" loading="lazy" />
+              <div class="glass-caption">
+                <h3>Bastidores</h3>
+                <p>Equipe focada no seu caso.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 06: Sala de Espera -->
+          <div class="espaco-item reveal" data-animate="fade-up" style="transition-delay: 500ms">
+            <div class="glass-card">
+              <span class="card-number">06</span>
+              <img src="Assets/aposente-sala-espera-clientes.webp" alt="Sala de espera" loading="lazy" />
+              <div class="glass-caption">
+                <h3>Sua Estada</h3>
+                <p>Ambiente acolhedor e seguro.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ========== SOBRE / CREDENCIAIS ========== -->
-    <section class="section section--dark" id="sobre" aria-labelledby="sobre-title">
+    <!-- ========== QUEM SOMOS / SOBRE ========== -->
+    <section class="section section--sobre" id="sobre" aria-labelledby="sobre-title">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header section-header--center">
           <span class="eyebrow reveal">Quem Somos</span>
-          <h2 class="section-title section-title--white reveal" id="sobre-title">Há 9 anos descomplicando a Previdência Social</h2>
+          <h2 class="section-title reveal" id="sobre-title">Há 9 anos descomplicando a Previdência Social</h2>
         </div>
-        <div class="sobre-text reveal">
-          <p>Fundada em junho de 2016 por Kelvin Frazão e Eriberto Nobre, a Aposente surgiu da percepção da dificuldade que pessoas comuns têm em obter orientação clara sobre serviços de aposentadoria. Ao longo desses anos, enfrentamos diversas mudanças regulatórias, incluindo as reformas previdenciárias e os impactos da pandemia de COVID-19. Nossa equipe de 12+ profissionais está sempre disposta a encarar os obstáculos do INSS e garantir que cada cliente receba o benefício que merece.</p>
-        </div>
-        <div class="counters-grid" data-animate="stagger" data-stagger="100">
-          <div class="counter-item reveal">
-            <div class="counter-number" data-target="9" data-suffix="+">0</div>
-            <p class="counter-label">Anos de experiência</p>
+        <div class="sobre-layout">
+          <div class="sobre-text glass-light reveal">
+            <p>Fundada em junho de 2016 por Kelvin Frazão e Eriberto Nobre, a Aposente surgiu da percepção da dificuldade que pessoas comuns têm em obter orientação clara sobre serviços de aposentadoria. Nossa equipe de 12+ profissionais está sempre disposta a encarar os obstáculos do INSS e garantir que cada cliente receba o benefício que merece.</p>
           </div>
-          <div class="counter-item reveal">
-            <div class="counter-number" data-target="152" data-suffix="">0</div>
-            <p class="counter-label">Avaliações 5 estrelas</p>
+
+          <div class="sobre-bottom-grid">
+            <div class="pilares-grid" data-animate="stagger" data-stagger="100">
+              <div class="pilar-item glass-light reveal">
+                <div class="pilar-icon">⚖️</div>
+                <h3>Transparência</h3>
+                <p>Clareza em cada etapa do seu processo.</p>
+              </div>
+              <div class="pilar-item glass-light reveal">
+                <div class="pilar-icon">🤝</div>
+                <h3>Humanização</h3>
+                <p>Sua história é nossa prioridade.</p>
+              </div>
+              <div class="pilar-item glass-light reveal">
+                <div class="pilar-icon">⚡</div>
+                <h3>Agilidade</h3>
+                <p>Protocolos digitais para resultados rápidos.</p>
+              </div>
+              <div class="pilar-item glass-light reveal">
+                <div class="pilar-icon">⭐</div>
+                <h3>Excelência</h3>
+                <p>Especialistas em Direito Previdenciário.</p>
+              </div>
+            </div>
+
+            <div class="sobre-image-container reveal">
+              <div class="sobre-image glass-light">
+                <img src="Assets/aposente-equipe-selfie-escritorio.webp" alt="Equipe Aposente Campo Grande" loading="lazy" />
+                <div class="sobre-image-overlay"></div>
+              </div>
+            </div>
           </div>
-          <div class="counter-item reveal">
-            <div class="counter-number" data-target="12" data-suffix="+">0</div>
-            <p class="counter-label">Bairros atendidos</p>
-          </div>
-          <div class="counter-item reveal">
-            <div class="counter-number" data-target="1000" data-suffix="+">0</div>
-            <p class="counter-label">Clientes atendidos</p>
-          </div>
-        </div>
-        <div class="sobre-image reveal">
-          <img src="Assets/aposente-equipe-selfie-escritorio.webp" alt="Equipe Aposente Campo Grande" loading="lazy" />
-          <div class="sobre-image-overlay"></div>
         </div>
       </div>
     </section>
@@ -760,10 +830,7 @@
                 Acompanhamento até a concessão do benefício
               </li>
             </ul>
-            <a href="https://wa.me/5521971168856?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20agendar%20minha%20consulta%20grat%C3%BAita." target="_blank" rel="noopener noreferrer" class="cta-whatsapp-link">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-              Ou fale pelo WhatsApp
-            </a>
+
           </div>
           <div class="cta-form-wrapper reveal" style="transition-delay:200ms">
             <div class="cta-form-card" data-spotlight id="formCard">
@@ -830,6 +897,20 @@
             <img src="Assets/logo-aposente-simbolo-desktop.webp" alt="Aposente Campo Grande" class="logo-img logo-img--footer" />
           </a>
           <p class="footer-desc">Assessoria previdenciária especializada em Campo Grande, RJ. Há 9 anos descomplicando a burocracia do INSS com transparência e dedicação.</p>
+          <div class="footer-redes">
+            <a href="https://www.instagram.com/aposentecg/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="rede-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            </a>
+            <a href="https://www.facebook.com/aposentecg/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="rede-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@aposenteacessoria5705" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="rede-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@aposentecginss" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="rede-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+            </a>
+          </div>
         </div>
         <div class="footer-col reveal">
           <h4 class="footer-title">Serviços</h4>
@@ -864,23 +945,6 @@
               </a>
             </li>
           </ul>
-        </div>
-        <div class="footer-col reveal">
-          <h4 class="footer-title">Siga a Aposente</h4>
-          <div class="footer-redes">
-            <a href="https://www.instagram.com/aposentecg/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="rede-btn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-            </a>
-            <a href="https://www.facebook.com/aposentecg/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="rede-btn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-            </a>
-            <a href="https://www.youtube.com/@aposenteacessoria5705" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="rede-btn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
-            </a>
-            <a href="https://www.tiktok.com/@aposentecginss" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="rede-btn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
-            </a>
-          </div>
         </div>
       </div>
       <div class="footer-bottom">
