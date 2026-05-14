@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mv \"logo-mobile-aposente.webp\" \"logo-aposente-icone-mobile.webp\")",
+      "Bash(mv \"logo-desktop-aposente.webp\" \"logo-aposente-simbolo-desktop.webp\")",
+      "Bash(mv \"aposente+campo+grande+assessoria+previdenciaria+inss+beneficios+emcampo+grande+riodejaneiro-rj \\(.webp\" \"aposente-equipe-selfie-escritorio.webp\")",
+      "Bash(mv \"aposente+campo+grande+assessoria+previdenciaria+inss+beneficios+emcampo+grande+riodejaneiro-rj \\(1\\).webp\" \"aposente-fachada-entrada-vitrine.webp\")",
+      "Bash(mv \"aposente+campo+grande+assessoria+previdenciaria+inss+beneficios+emcampo+grande+riodejaneiro-rj \\(1.webp\" \"aposente-fachada-exterior-numero220.webp\")",
+      "Bash(mv \"aposente+campo+grande+assessoria+previdenciaria+inss+beneficios+emcampo+grande+riodejaneiro-rj \\(1\\).mp4\" \"aposente-depoimento-edson-aposentadoria-construcao-civil.mp4\")",
+      "Bash(mv \"aposente+campo+grande+assessoria+previdenciaria+inss+beneficios+emcampo+grande+riodejaneiro-rj \\(2\\).mp4\" \"aposente-depoimento-cliente-aposentada-feliz.mp4\")",
+      "Bash(mv \"aposente+campo+grande+assessoria+previdenciaria+inss+beneficios+emcampo+grande+riodejaneiro-rj \\(3\\).mp4\" \"aposente-depoimento-marcos-beneficio-incapacidade-inss.mp4\")",
+      "Bash(mv \"aposente+campo+grande+assessoria+previdenciaria+inss+beneficios+emcampo+grande+riodejaneiro-rj \\(4\\).mp4\" \"aposente-depoimento-maria-fatima-aposentada-68anos.mp4\")",
+      "Bash(mv \"aposente+campo+grande+assessoria+previdenciaria+inss+beneficios+emcampo+grande+riodejaneiro-rj \\(5\\).mp4\" \"aposente-depoimento-mauro-deficiencia-visual-bpc.mp4\")",
+      "WebSearch"
+    ]
+  }
+}
