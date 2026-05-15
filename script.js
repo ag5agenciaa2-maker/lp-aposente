@@ -222,26 +222,34 @@
   startAutoplay();
 })();
 
-// ====== FAQ ACCORDION ======
+// ====== FAQ INTERATIVO ======
 (function initFAQ() {
-  const items = document.querySelectorAll('.faq-item');
+  const items = document.querySelectorAll('.faq-big-item');
+  const resp  = document.getElementById('faqResp');
+  if (!items.length || !resp) return;
+
+  const p = resp.querySelector('p');
+
+  function activate(item) {
+    items.forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    resp.classList.add('changing');
+    setTimeout(() => {
+      p.textContent = item.dataset.answer || '';
+      resp.classList.remove('changing');
+    }, 220);
+  }
+
+  // Inicializa com primeiro item
+  activate(items[0]);
 
   items.forEach(item => {
-    const question = item.querySelector('.faq-question');
-
-    question.addEventListener('click', () => {
-      const isOpen = item.classList.contains('open');
-
-      // Close all others (optional - remove if you want multiple open)
-      items.forEach(other => {
-        other.classList.remove('open');
-        other.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-      });
-
-      if (!isOpen) {
-        item.classList.add('open');
-        question.setAttribute('aria-expanded', 'true');
-      }
+    item.addEventListener('click', () => activate(item));
+    item.addEventListener('mouseenter', () => {
+      if (window.innerWidth >= 900) activate(item);
+    });
+    item.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(item); }
     });
   });
 })();
@@ -386,39 +394,188 @@
   });
 })();
 
-// ====== VIDEO MODAL ======
+// ====== VDEP CAROUSEL ======
+(function initVdepCarousel() {
+  const wrap  = document.querySelector('.vdep-track-wrap');
+  const track = document.getElementById('vdepTrack');
+  const prev  = document.getElementById('vdepPrev');
+  const next  = document.getElementById('vdepNext');
+  const curEl = document.getElementById('vdepCur');
+  const totEl = document.getElementById('vdepTot');
+
+  if (!wrap || !track) return;
+
+  const cards = Array.from(track.querySelectorAll('.vdep-card'));
+  let current = 0;
+
+  if (totEl) totEl.textContent = String(cards.length).padStart(2, '0');
+
+  function goTo(index) {
+    current = Math.max(0, Math.min(index, cards.length - 1));
+    const card = cards[current];
+    const offset = card.offsetLeft - (wrap.offsetWidth / 2) + (card.offsetWidth / 2);
+    wrap.scrollTo({ left: offset, behavior: 'smooth' });
+    setActive(current);
+  }
+
+  function setActive(index) {
+    cards.forEach((c, i) => c.classList.toggle('is-active', i === index));
+    if (curEl) curEl.textContent = String(index + 1).padStart(2, '0');
+  }
+
+  // Detecta card mais centrado após scroll
+  let ticking = false;
+  wrap.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const center = wrap.scrollLeft + wrap.offsetWidth / 2;
+      let closest = 0, minDist = Infinity;
+      cards.forEach((card, i) => {
+        const dist = Math.abs((card.offsetLeft + card.offsetWidth / 2) - center);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      if (closest !== current) setActive(closest);
+      current = closest;
+      ticking = false;
+    });
+  }, { passive: true });
+
+  prev.addEventListener('click', () => goTo(current - 1));
+  next.addEventListener('click', () => goTo(current + 1));
+
+  wrap.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+    if (e.key === 'ArrowRight') goTo(current + 1);
+  });
+
+  // Inicializa
+  setActive(0);
+})();
+
+// ====== VIDEO MODAL — .video-card (seção de conteúdo) ======
 (function initVideoModal() {
-  const modal = document.getElementById('videoModal');
-  const video = document.getElementById('modalVideo');
+  const modal    = document.getElementById('videoModal');
+  const player   = document.getElementById('videoModalPlayer');
   const closeBtn = document.getElementById('videoModalClose');
-  const cards = document.querySelectorAll('.video-card');
+  const cards    = document.querySelectorAll('.video-card');
+
+  if (!modal) return;
+
+  function isYouTubeId(val) {
+    return val && !val.includes('/') && !val.includes('.');
+  }
+
+  function openModal(src) {
+    player.innerHTML = '';
+    if (isYouTubeId(src)) {
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube.com/embed/${src}?autoplay=1&rel=0&playsinline=1`;
+      iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.title = 'Depoimento em vídeo';
+      iframe.style.cssText = 'width:100%;height:100%;border:none;border-radius:12px;';
+      player.appendChild(iframe);
+    } else {
+      const video = document.createElement('video');
+      video.src = src;
+      video.controls = true;
+      video.autoplay = true;
+      video.style.cssText = 'width:100%;height:100%;border-radius:12px;';
+      player.appendChild(video);
+      video.play().catch(() => {});
+    }
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.hidden = true;
+    player.innerHTML = '';
+    document.body.style.overflow = '';
+  }
 
   cards.forEach(card => {
     card.addEventListener('click', () => {
       const src = card.dataset.video;
-      if (src) {
-        video.src = src;
-        modal.hidden = false;
-        document.body.style.overflow = 'hidden';
-        video.play().catch(() => {});
-      }
+      if (src) openModal(src);
     });
   });
 
-  function closeModal() {
-    modal.hidden = true;
-    video.pause();
-    video.src = '';
-    document.body.style.overflow = '';
-  }
-
   closeBtn.addEventListener('click', closeModal);
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
-  });
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+})();
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !modal.hidden) closeModal();
+// ====== VDEP — play inline + controles ======
+(function initVdepInlinePlay() {
+  document.querySelectorAll('.vdep-card').forEach(card => {
+    const playBtn   = card.querySelector('.vdep-play');
+    const muteBtn   = card.querySelector('.vdep-ctrl--mute');
+    const expandBtn = card.querySelector('.vdep-ctrl--expand');
+    const thumb     = card.querySelector('.vdep-thumb');
+    if (!playBtn || !thumb) return;
+
+    let iframe = null;
+    let muted  = true; // YouTube autoplay exige mudo — começa mudo
+
+    // ── Play ──
+    playBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (card.classList.contains('vdep-playing')) return;
+
+      const src = card.dataset.video;
+      if (!src) return;
+
+      iframe = document.createElement('iframe');
+      // mute=1 para autoplay funcionar; enablejsapi=1 para postMessage
+      iframe.src = `https://www.youtube.com/embed/${src}?autoplay=1&mute=1&controls=0&rel=0&playsinline=1&modestbranding=1&enablejsapi=1&fs=0&iv_load_policy=3&disablekb=1`;
+      iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      iframe.allowFullscreen = true;
+      iframe.title = 'Depoimento em vídeo';
+      iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;z-index:10;border-radius:22px;';
+
+      thumb.appendChild(iframe);
+      card.classList.add('vdep-playing');
+      // inicia mudo — ícone mudo visível por padrão via CSS
+    });
+
+    // ── Mudo / Som ──
+    muteBtn && muteBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!iframe) return;
+
+      muted = !muted;
+      const cmd = muted ? 'mute' : 'unMute';
+      iframe.contentWindow.postMessage(
+        JSON.stringify({ event: 'command', func: cmd, args: [] }),
+        '*'
+      );
+      card.classList.toggle('vdep-sound', !muted);
+    });
+
+    // ── Expandir → abre modal 9:16 premium com som ──
+    expandBtn && expandBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const src = card.dataset.video;
+      if (!src) return;
+
+      const modal  = document.getElementById('videoModal');
+      const player = document.getElementById('videoModalPlayer');
+      if (!modal || !player) return;
+
+      player.innerHTML = '';
+      const iframeModal = document.createElement('iframe');
+      iframeModal.src = `https://www.youtube.com/embed/${src}?autoplay=1&mute=0&controls=0&rel=0&playsinline=1&modestbranding=1&enablejsapi=1&fs=0&iv_load_policy=3&disablekb=1`;
+      iframeModal.allow = 'autoplay; encrypted-media; picture-in-picture';
+      iframeModal.allowFullscreen = true;
+      iframeModal.title = 'Depoimento em vídeo';
+      iframeModal.style.cssText = 'width:100%;height:100%;border:none;border-radius:20px;';
+      player.appendChild(iframeModal);
+
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+    });
   });
 })();
 
