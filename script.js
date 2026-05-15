@@ -267,6 +267,15 @@
       card.style.setProperty('--mouse-y', `${y}%`);
     });
   });
+
+  // spotlight nos svc-cards
+  document.querySelectorAll('.svc-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--cx', `${((e.clientX - r.left) / r.width) * 100}%`);
+      card.style.setProperty('--cy', `${((e.clientY - r.top) / r.height) * 100}%`);
+    });
+  });
 })();
 
 // ====== COUNTER ANIMATION ======
@@ -502,10 +511,33 @@
     });
   });
 
-  closeBtn.addEventListener('click', closeModal);
-  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  closeBtn && closeBtn.addEventListener('click', closeModal);
+  document.getElementById('videoModalBackdrop')?.addEventListener('click', closeModal);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
 })();
+
+// ====== VDEP — pausa vídeo em play ao sair da seção ======
+const vdepSection = document.getElementById('videos-depoimentos');
+if (vdepSection) {
+  const vdepSectionObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) return;
+      document.querySelectorAll('.vdep-card.vdep-playing').forEach(card => {
+        const v = card.querySelector('video[data-inline]');
+        if (v) { v.pause(); v.remove(); }
+        card.classList.remove('vdep-playing', 'vdep-sound');
+      });
+    });
+  }, { threshold: 0.1 });
+  vdepSectionObs.observe(vdepSection);
+}
+
+// ====== VDEP — força primeiro frame como thumbnail ======
+document.querySelectorAll('.vdep-thumb-video').forEach(v => {
+  v.addEventListener('loadedmetadata', () => {
+    v.currentTime = parseFloat(v.dataset.thumbTime ?? 0.1);
+  });
+});
 
 // ====== VDEP — play inline + controles ======
 (function initVdepInlinePlay() {
@@ -527,34 +559,39 @@
       const src = card.dataset.video;
       if (!src) return;
 
-      iframe = document.createElement('iframe');
-      // mute=1 para autoplay funcionar; enablejsapi=1 para postMessage
-      iframe.src = `https://www.youtube.com/embed/${src}?autoplay=1&mute=1&controls=0&rel=0&playsinline=1&modestbranding=1&enablejsapi=1&fs=0&iv_load_policy=3&disablekb=1`;
-      iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
-      iframe.allowFullscreen = true;
-      iframe.title = 'Depoimento em vídeo';
-      iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;z-index:10;border-radius:22px;';
+      // Pausa todos os outros cards
+      document.querySelectorAll('.vdep-card.vdep-playing').forEach(other => {
+        if (other === card) return;
+        const v = other.querySelector('video[data-inline]');
+        if (v) { v.pause(); v.remove(); }
+        other.classList.remove('vdep-playing', 'vdep-sound');
+      });
 
-      thumb.appendChild(iframe);
+      const video = document.createElement('video');
+      video.src = src;
+      video.setAttribute('data-inline', '');
+      video.muted = true;
+      video.autoplay = true;
+      video.playsinline = true;
+      video.loop = false;
+      video.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:10;border-radius:22px;background:#000;';
+      thumb.appendChild(video);
+      video.play();
+      iframe = video;
+
       card.classList.add('vdep-playing');
-      // inicia mudo — ícone mudo visível por padrão via CSS
     });
 
     // ── Mudo / Som ──
     muteBtn && muteBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       if (!iframe) return;
-
       muted = !muted;
-      const cmd = muted ? 'mute' : 'unMute';
-      iframe.contentWindow.postMessage(
-        JSON.stringify({ event: 'command', func: cmd, args: [] }),
-        '*'
-      );
+      iframe.muted = muted;
       card.classList.toggle('vdep-sound', !muted);
     });
 
-    // ── Expandir → abre modal 9:16 premium com som ──
+    // ── Expandir → abre modal com o vídeo com som ──
     expandBtn && expandBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       const src = card.dataset.video;
@@ -565,18 +602,144 @@
       if (!modal || !player) return;
 
       player.innerHTML = '';
-      const iframeModal = document.createElement('iframe');
-      iframeModal.src = `https://www.youtube.com/embed/${src}?autoplay=1&mute=0&controls=0&rel=0&playsinline=1&modestbranding=1&enablejsapi=1&fs=0&iv_load_policy=3&disablekb=1`;
-      iframeModal.allow = 'autoplay; encrypted-media; picture-in-picture';
-      iframeModal.allowFullscreen = true;
-      iframeModal.title = 'Depoimento em vídeo';
-      iframeModal.style.cssText = 'width:100%;height:100%;border:none;border-radius:20px;';
-      player.appendChild(iframeModal);
+      const videoModal = document.createElement('video');
+      videoModal.src = src;
+      videoModal.autoplay = true;
+      videoModal.controls = true;
+      videoModal.playsinline = true;
+      videoModal.style.cssText = 'width:100%;height:100%;border-radius:20px;background:#000;object-fit:contain;';
+      player.appendChild(videoModal);
 
       modal.hidden = false;
       document.body.style.overflow = 'hidden';
     });
   });
+})();
+
+// ====== VÍDEOS EDUCATIVOS ======
+(function initEduVideos() {
+  const items    = document.querySelectorAll('.edu-item[data-src]');
+  const video    = document.getElementById('eduVideo');
+  const phone    = video ? video.closest('.edu-phone') : null;
+  const playBtn  = document.getElementById('eduPlayBtn');
+  const tagEl    = document.getElementById('eduTag');
+  const titleEl  = document.getElementById('eduMetaTitle');
+
+  if (!items.length || !video || !phone) return;
+
+  function select(item) {
+    items.forEach(i => i.classList.remove('is-active'));
+    item.classList.add('is-active');
+
+    const src   = item.dataset.src;
+    const tag   = item.dataset.tag   || '';
+    const title = item.dataset.title || '';
+
+    // atualiza meta
+    if (tagEl)   tagEl.textContent   = tag;
+    if (titleEl) titleEl.textContent = title;
+
+    // troca fonte mas não toca automaticamente
+    video.pause();
+    phone.classList.remove('is-playing');
+    video.src = src;
+    video.load();
+  }
+
+  // clique na lista
+  items.forEach(item => item.addEventListener('click', () => select(item)));
+
+  // botão play: toggle pause/play
+  playBtn && playBtn.addEventListener('click', () => {
+    if (video.paused) {
+      video.play().catch(() => {});
+      phone.classList.add('is-playing');
+    } else {
+      video.pause();
+      phone.classList.remove('is-playing');
+    }
+  });
+
+  video.addEventListener('ended', () => phone.classList.remove('is-playing'));
+
+  // ── botão mute ──
+  const muteBtn   = document.getElementById('eduMuteBtn');
+  const iconSound = muteBtn && muteBtn.querySelector('.edu-icon-sound');
+  const iconMuted = muteBtn && muteBtn.querySelector('.edu-icon-muted');
+
+  muteBtn && muteBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    video.muted = !video.muted;
+    if (iconSound) iconSound.style.display = video.muted ? 'none'  : '';
+    if (iconMuted) iconMuted.style.display = video.muted ? ''      : 'none';
+  });
+
+  // ── modal premium ──
+  const modal = document.createElement('div');
+  modal.id = 'eduModal';
+  modal.innerHTML = `
+    <div class="edu-modal-backdrop"></div>
+    <div class="edu-modal-inner">
+      <video class="edu-modal-video" id="eduModalVideo" playsinline></video>
+      <div class="edu-modal-controls">
+        <button class="edu-modal-ctrl" id="eduModalMute" aria-label="Som">
+          <svg class="edu-icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          <svg class="edu-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+        </button>
+        <button class="edu-modal-ctrl" id="eduModalClose" aria-label="Fechar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  const modalVideo  = document.getElementById('eduModalVideo');
+  const modalClose  = document.getElementById('eduModalClose');
+  const modalMute   = document.getElementById('eduModalMute');
+  const modalSoundI = modalMute.querySelector('.edu-icon-sound');
+  const modalMutedI = modalMute.querySelector('.edu-icon-muted');
+
+  function openModal() {
+    if (!video.src) return;
+    modalVideo.src      = video.src;
+    modalVideo.muted    = video.muted;
+    modalVideo.currentTime = video.currentTime;
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    modalVideo.play().catch(() => {});
+    updateModalMuteIcon();
+  }
+
+  function closeModal() {
+    modal.classList.remove('is-open');
+    document.body.style.overflow = '';
+    modalVideo.pause();
+    modalVideo.src = '';
+  }
+
+  function updateModalMuteIcon() {
+    modalSoundI.style.display = modalVideo.muted ? 'none' : '';
+    modalMutedI.style.display = modalVideo.muted ? ''     : 'none';
+  }
+
+  modalMute.addEventListener('click', () => {
+    modalVideo.muted = !modalVideo.muted;
+    updateModalMuteIcon();
+  });
+
+  modalClose.addEventListener('click', closeModal);
+  modal.querySelector('.edu-modal-backdrop').addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  const fullBtn = document.getElementById('eduFullBtn');
+  fullBtn && fullBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openModal();
+  });
+
+  // inicia com o primeiro item
+  select(items[0]);
 })();
 
 // ====== DOR/SOLUÇÃO LINE ANIMATION ======
@@ -638,3 +801,74 @@
     badge.classList.remove('show');
   });
 })();
+
+/* ====== VÍDEOS INSTITUCIONAIS — pausa ao sair da seção ====== */
+const viSection = document.getElementById('videos-institucionais');
+if (viSection) {
+  new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) return;
+      document.querySelectorAll('.vi-card-video-wrap').forEach(wrap => {
+        const v = wrap.querySelector('.vi-player');
+        if (v) { v.pause(); v.currentTime = 0; }
+        wrap.classList.remove('is-playing');
+      });
+    });
+  }, { threshold: 0.2 }).observe(viSection);
+}
+
+/* ====== VÍDEOS INSTITUCIONAIS — overlay play + controles ====== */
+document.querySelectorAll('.vi-card-video-wrap').forEach((wrap) => {
+  const video   = wrap.querySelector('.vi-player');
+  const playBtn = wrap.querySelector('.vi-play-btn');
+  const muteBtn = wrap.querySelector('.vi-mute-btn');
+  const fsBtn   = wrap.querySelector('.vi-fullscreen-btn');
+  const iconSound = wrap.querySelector('.vi-icon-sound');
+  const iconMuted = wrap.querySelector('.vi-icon-muted');
+
+  // Play
+  playBtn.addEventListener('click', () => {
+    document.querySelectorAll('.vi-card-video-wrap').forEach(other => {
+      if (other === wrap) return;
+      const v = other.querySelector('.vi-player');
+      if (v) { v.pause(); v.currentTime = 0; }
+      other.classList.remove('is-playing');
+    });
+    wrap.classList.add('is-playing');
+    video.play();
+  });
+
+  video.addEventListener('pause', () => wrap.classList.remove('is-playing'));
+  video.addEventListener('ended', () => wrap.classList.remove('is-playing'));
+
+  // Som
+  muteBtn && muteBtn.addEventListener('click', () => {
+    video.muted = !video.muted;
+    iconSound.style.display = video.muted ? 'none' : '';
+    iconMuted.style.display = video.muted ? ''     : 'none';
+  });
+
+  // Expandir → modal premium 9:16
+  fsBtn && fsBtn.addEventListener('click', () => {
+    const modal  = document.getElementById('videoModal');
+    const player = document.getElementById('videoModalPlayer');
+    if (!modal || !player) return;
+
+    const currentTime = video.currentTime;
+    const isMuted     = video.muted;
+
+    player.innerHTML = '';
+    const clone = document.createElement('video');
+    clone.src         = video.src;
+    clone.currentTime = currentTime;
+    clone.muted       = isMuted;
+    clone.autoplay    = true;
+    clone.controls    = true;
+    clone.playsinline = true;
+    player.appendChild(clone);
+
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  });
+});
+
