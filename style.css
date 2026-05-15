@@ -539,13 +539,14 @@ body::after {
   display: grid;
   grid-template-columns: 1fr;
   min-height: 100dvh;
+  overflow: hidden;
 }
 
 .hero-content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 120px var(--container-margin) 48px;
+  justify-content: flex-start;
+  padding: 180px var(--container-margin) 48px;
   position: relative;
   z-index: 10;
 }
@@ -558,10 +559,11 @@ body::after {
 .hero-title {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.875rem, 4vw, 3.75rem);
+  font-size: clamp(1.875rem, 3.5vw, 3.2rem);
   line-height: 1.1;
   color: var(--branco);
   margin-bottom: 20px;
+  max-width: 85ch;
   clip-path: inset(0 100% 0 0);
   opacity: 0;
   animation: clipReveal 0.9s cubic-bezier(0.77, 0, 0.175, 1) 0.2s forwards;
@@ -3745,8 +3747,8 @@ textarea.form-input {
   }
 
   .hero-content {
-    padding: 96px var(--container-margin) 40px;
-    justify-content: center;
+    padding: 180px var(--container-margin) 40px;
+    justify-content: flex-start;
   }
 
   .hero-mobile-image {
@@ -3795,7 +3797,7 @@ textarea.form-input {
   }
 
   .hero-content {
-    padding: 100px var(--container-margin) 40px;
+    padding: 180px var(--container-margin) 40px;
   }
 
   .navbar-container {
