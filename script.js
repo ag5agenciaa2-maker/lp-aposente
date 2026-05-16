@@ -695,6 +695,7 @@ document.querySelectorAll('.vdep-thumb-video').forEach(v => {
     new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting && !video.paused) {
         video.pause();
+        video.currentTime = 0;
         phone.classList.remove('is-playing');
       }
     }, { threshold: 0 }).observe(section);
