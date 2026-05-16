@@ -278,9 +278,12 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" href="style.css" as="style">
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="cookie-banner.css" />
+  <link rel="preload" href="cookie-banner.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="cookie-banner.css"></noscript>
   <link rel="icon" type="image/x-icon" href="Assets/favicon-aposente.ico">
 </head>
 <body>
@@ -289,7 +292,7 @@
   <header class="navbar" id="navbar">
     <div class="navbar-container">
       <a href="#inicio" class="navbar-logo" aria-label="Aposente Campo Grande - Voltar ao topo">
-        <img src="Assets/logo-aposente-simbolo-desktop.webp" alt="Aposente Campo Grande" class="logo-img logo-img--desktop" />
+        <img src="Assets/logo-aposente-simbolo-desktop.webp" alt="Aposente Campo Grande" class="logo-img logo-img--desktop" width="400" height="400" />
       </a>
 
       <nav class="navbar-nav" aria-label="Navegação principal">
@@ -316,10 +319,10 @@
     <section class="hero" id="inicio" aria-label="Hero">
       <div class="hero-grid">
         <div class="hero-content">
-          <span class="eyebrow hero-eyebrow" data-animate="fade">Assessoria Previdenciária • Campo Grande/RJ</span>
-          <h1 class="hero-title" data-animate="clip">Aposentadoria em Campo Grande sem burocracia</h1>
-          <p class="hero-subtitle" data-animate="fade-up">Há 9 anos descomplicando a burocracia do INSS para trabalhadores da Zona Oeste do Rio. Equipe especializada, linguagem acessível e transparência em cada etapa.</p>
-          <div class="hero-ctas" data-animate="fade-up">
+          <span class="eyebrow hero-eyebrow">Assessoria Previdenciária • Campo Grande/RJ</span>
+          <h1 class="hero-title">Aposentadoria em Campo Grande sem burocracia</h1>
+          <p class="hero-subtitle">Há 9 anos descomplicando a burocracia do INSS para trabalhadores da Zona Oeste do Rio. Equipe especializada, linguagem acessível e transparência em cada etapa.</p>
+          <div class="hero-ctas">
             <a href="https://wa.me/5521971168856?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20uma%20informa%C3%A7%C3%A3o." target="_blank" rel="noopener noreferrer" class="btn-primary">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
               Fale pelo WhatsApp
@@ -330,7 +333,7 @@
             </a>
           </div>
         </div>
-        <div class="hero-image-wrapper" data-animate="slide-right">
+        <div class="hero-image-wrapper">
           <img src="Assets/aposente-fachada-placa-assessoria.webp" alt="Fachada da Aposente Campo Grande — Assessoria Previdenciária" class="hero-image" loading="eager" fetchpriority="high" width="720" height="900" />
           <div class="hero-video-frame">
             <video class="hero-video" id="hero-video" src="https://assets.cdn.filesafe.space/7hzaWcGgawCV1WudlwA7/media/6a0882e40a69f1e7669927f8.mp4" autoplay muted loop playsinline></video>
@@ -381,9 +384,9 @@
           <div class="dor-col">
             <div class="dor-solucao-img-wrap reveal">
               <img
-                src="images/dor-inss.png"
+                src="images/dor-inss.webp"
                 alt="Fila longa de pessoas aguardando atendimento representando burocracia interminável do INSS"
-                width="800" height="420" loading="lazy"
+                width="1024" height="1024" loading="lazy"
                 class="dor-solucao-img dor-solucao-img--dor"
               />
             </div>
@@ -412,9 +415,9 @@
           <div class="solucao-col">
             <div class="dor-solucao-img-wrap reveal">
               <img
-                src="images/solucao-aposente.png"
+                src="images/solucao-aposente.webp"
                 alt="Equipe especializada em atendimento ao cliente acompanhando processo até a concessão do benefício"
-                width="800" height="420" loading="lazy"
+                width="1024" height="1024" loading="lazy"
                 class="dor-solucao-img dor-solucao-img--solucao"
               />
             </div>
@@ -464,42 +467,42 @@
       <div class="container">
         <div class="svc-grid">
 
-          <a href="#contato" class="svc-card reveal" data-scroll>
+          <a href="#contato" class="svc-card reveal" data-scroll aria-label="Consultar sobre Aposentadoria por Idade">
             <span class="svc-card-num">01</span>
             <h3 class="svc-card-title">Aposentadoria<br>por Idade</h3>
             <p class="svc-card-desc">Analisamos seu histórico contributivo para identificar o melhor enquadramento possível.</p>
             <span class="svc-card-link">Consultar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
           </a>
 
-          <a href="#contato" class="svc-card reveal" data-scroll>
+          <a href="#contato" class="svc-card reveal" data-scroll aria-label="Consultar sobre LOAS e BPC">
             <span class="svc-card-num">02</span>
             <h3 class="svc-card-title">LOAS / BPC<br>Idoso e Deficiente</h3>
             <p class="svc-card-desc">Verificamos elegibilidade e conduzimos todo o processo sem burocracia.</p>
             <span class="svc-card-link">Consultar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
           </a>
 
-          <a href="#contato" class="svc-card reveal" data-scroll>
+          <a href="#contato" class="svc-card reveal" data-scroll aria-label="Consultar sobre Auxílio-Doença">
             <span class="svc-card-num">03</span>
             <h3 class="svc-card-title">Auxílio-Doença</h3>
             <p class="svc-card-desc">Suporte especializado em momento de vulnerabilidade, com acompanhamento dedicado.</p>
             <span class="svc-card-link">Consultar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
           </a>
 
-          <a href="#contato" class="svc-card reveal" data-scroll>
+          <a href="#contato" class="svc-card reveal" data-scroll aria-label="Consultar sobre Pensão por Morte">
             <span class="svc-card-num">04</span>
             <h3 class="svc-card-title">Pensão<br>por Morte</h3>
             <p class="svc-card-desc">Suporte completo para dependentes nos momentos mais difíceis.</p>
             <span class="svc-card-link">Consultar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
           </a>
 
-          <a href="#contato" class="svc-card reveal" data-scroll>
+          <a href="#contato" class="svc-card reveal" data-scroll aria-label="Consultar sobre Auxílio-Maternidade">
             <span class="svc-card-num">05</span>
             <h3 class="svc-card-title">Auxílio-Maternidade</h3>
             <p class="svc-card-desc">Todos os direitos previdenciários para mães e gestantes, sem complicação.</p>
             <span class="svc-card-link">Consultar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
           </a>
 
-          <a href="#contato" class="svc-card reveal" data-scroll>
+          <a href="#contato" class="svc-card reveal" data-scroll aria-label="Consultar sobre Cálculo Previdenciário">
             <span class="svc-card-num">06</span>
             <h3 class="svc-card-title">Cálculo<br>Previdenciário</h3>
             <p class="svc-card-desc">Revisão técnica de benefícios para orientar o segurado sobre seus direitos.</p>
@@ -635,7 +638,7 @@
           <!-- 01: Fachada Jardim -->
           <div class="espaco-item reveal" data-animate="fade-up">
             <div class="glass-card card-fachada">
-              <img src="Assets/aposente-entrada-toldo-amarelo.webp" alt="Entrada do escritório Aposente com toldo amarelo" loading="lazy" />
+              <img src="Assets/aposente-entrada-toldo-amarelo.webp" alt="Entrada do escritório Aposente com toldo amarelo" loading="lazy" width="1200" height="1600" />
               <div class="glass-caption">
                 <span class="card-number">01</span>
                 <h3>Ambiente Externo</h3>
@@ -646,7 +649,7 @@
           <!-- 02: Recepção -->
           <div class="espaco-item reveal" data-animate="fade-up" style="transition-delay: 100ms">
             <div class="glass-card">
-              <img src="Assets/aposente-recepcao-balcao-logo.webp" alt="Recepção do escritório" loading="lazy" />
+              <img src="Assets/aposente-recepcao-balcao-logo.webp" alt="Recepção do escritório" loading="lazy" width="1600" height="1200" />
               <div class="glass-caption">
                 <span class="card-number">02</span>
                 <h3>Recepção</h3>
@@ -657,7 +660,7 @@
           <!-- 03: Reunião -->
           <div class="espaco-item reveal" data-animate="fade-up" style="transition-delay: 200ms">
             <div class="glass-card">
-              <img src="Assets/aposente-sala-reuniao-projetor.webp" alt="Sala de reuniões" loading="lazy" />
+              <img src="Assets/aposente-sala-reuniao-projetor.webp" alt="Sala de reuniões" loading="lazy" width="1600" height="1200" />
               <div class="glass-caption">
                 <span class="card-number">03</span>
                 <h3>Consultoria</h3>
@@ -668,7 +671,7 @@
           <!-- 04: Fachada Exterior / Número 220 -->
           <div class="espaco-item reveal" data-animate="fade-up" style="transition-delay: 300ms">
             <div class="glass-card card-numero">
-              <img src="Assets/aposente-fachada-placa-assessoria.webp" alt="Placa de assessoria na fachada" loading="lazy" />
+              <img src="Assets/aposente-fachada-placa-assessoria.webp" alt="Placa de assessoria na fachada" loading="lazy" width="1200" height="1600" />
               <div class="glass-caption">
                 <span class="card-number">04</span>
                 <h3>Acesso Principal</h3>
@@ -679,7 +682,7 @@
           <!-- 05: Sala Operacional -->
           <div class="espaco-item reveal" data-animate="fade-up" style="transition-delay: 400ms">
             <div class="glass-card">
-              <img src="Assets/aposente-equipe-sala-operacional.webp" alt="Equipe operacional" loading="lazy" />
+              <img src="Assets/aposente-equipe-sala-operacional.webp" alt="Equipe operacional" loading="lazy" width="1200" height="1600" />
               <div class="glass-caption">
                 <span class="card-number">05</span>
                 <h3>Bastidores</h3>
@@ -690,7 +693,7 @@
           <!-- 06: Sala de Espera -->
           <div class="espaco-item reveal" data-animate="fade-up" style="transition-delay: 500ms">
             <div class="glass-card">
-              <img src="Assets/aposente-sala-espera-clientes.webp" alt="Sala de espera" loading="lazy" />
+              <img src="Assets/aposente-sala-espera-clientes.webp" alt="Sala de espera" loading="lazy" width="1200" height="1600" />
               <div class="glass-caption">
                 <span class="card-number">06</span>
                 <h3>Sua Estada</h3>
@@ -753,7 +756,7 @@
             <div class="image-premium-wrapper">
               <p class="sobre-img-caption"><span class="sobre-img-eyebrow">Nossa Essência</span><br>Expertise com Propósito</p>
               <div class="image-frame-magazine">
-                <img src="Assets/aposente-equipe-selfie-escritorio.webp" alt="Equipe Aposente Campo Grande" loading="lazy" />
+                <img src="Assets/aposente-equipe-selfie-escritorio.webp" alt="Equipe Aposente Campo Grande" loading="lazy" width="1200" height="1600" />
                 <div class="frame-accent"></div>
               </div>
               <div class="experience-badge">
@@ -1505,7 +1508,7 @@
       <div class="footer-grid" data-animate="stagger" data-stagger="100">
         <div class="footer-col reveal">
           <a href="#inicio" class="footer-logo-link" aria-label="Aposente Campo Grande - Voltar ao topo">
-            <img src="Assets/logo-aposente-simbolo-desktop.webp" alt="Aposente Campo Grande" class="logo-img logo-img--footer" />
+            <img src="Assets/logo-aposente-simbolo-desktop.webp" alt="Aposente Campo Grande" class="logo-img logo-img--footer" width="400" height="400" />
           </a>
           <p class="footer-desc">Assessoria previdenciária especializada em Campo Grande, RJ. Há 9 anos descomplicando a burocracia do INSS com transparência e dedicação.</p>
           <div class="footer-redes">
@@ -1610,7 +1613,7 @@
   <div class="drawer" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menu de navegação" aria-hidden="true">
     <div class="drawer-header">
       <a href="#inicio" class="drawer-logo" aria-label="Aposente Campo Grande - Voltar ao topo">
-        <img src="Assets/logo-aposente-icone-mobile.webp" alt="Aposente Campo Grande" class="logo-img logo-img--mobile" />
+        <img src="Assets/logo-aposente-icone-mobile.webp" alt="Aposente Campo Grande" class="logo-img logo-img--mobile" width="200" height="200" />
       </a>
       <button class="drawer-close" id="drawerClose" aria-label="Fechar menu">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
@@ -1636,7 +1639,7 @@
         <div class="wa-header">
           <div class="wa-avatar-wrapper">
             <div class="wa-avatar">
-              <img src="Assets/logo-aposente-icone-mobile.webp" alt="Logo Aposente" class="wa-avatar-img" />
+              <img src="Assets/logo-aposente-icone-mobile.webp" alt="Logo Aposente" class="wa-avatar-img" width="200" height="200" />
             </div>
             <span class="wa-status-dot"></span>
           </div>
@@ -1660,7 +1663,7 @@
     </a>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
   <script>
     (function () {
       const hero = document.getElementById('inicio');
