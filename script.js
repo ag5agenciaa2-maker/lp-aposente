@@ -551,10 +551,22 @@ document.querySelectorAll('.vdep-thumb-video').forEach(v => {
     let iframe = null;
     let muted  = true; // YouTube autoplay exige mudo — começa mudo
 
-    // ── Play ──
+    // ── Play / Pause toggle ──
     playBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      if (card.classList.contains('vdep-playing')) return;
+
+      // Se já está tocando → toggle pausa
+      if (card.classList.contains('vdep-playing')) {
+        if (!iframe) return;
+        if (iframe.paused) {
+          iframe.play();
+          card.classList.remove('vdep-paused');
+        } else {
+          iframe.pause();
+          card.classList.add('vdep-paused');
+        }
+        return;
+      }
 
       const src = card.dataset.video;
       if (!src) return;
@@ -564,7 +576,7 @@ document.querySelectorAll('.vdep-thumb-video').forEach(v => {
         if (other === card) return;
         const v = other.querySelector('video[data-inline]');
         if (v) { v.pause(); v.remove(); }
-        other.classList.remove('vdep-playing', 'vdep-sound');
+        other.classList.remove('vdep-playing', 'vdep-sound', 'vdep-paused');
       });
 
       const video = document.createElement('video');
@@ -826,8 +838,12 @@ document.querySelectorAll('.vi-card-video-wrap').forEach((wrap) => {
   const iconSound = wrap.querySelector('.vi-icon-sound');
   const iconMuted = wrap.querySelector('.vi-icon-muted');
 
-  // Play
+  // Play / Pause toggle
   playBtn.addEventListener('click', () => {
+    if (wrap.classList.contains('is-playing')) {
+      video.pause();
+      return;
+    }
     document.querySelectorAll('.vi-card-video-wrap').forEach(other => {
       if (other === wrap) return;
       const v = other.querySelector('.vi-player');
