@@ -20,7 +20,7 @@
   --sucesso: #28A745;
 
   --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Playfair Display', Georgia, serif;
 
   --container-margin: 5vw;
   --section-pad: 120px;
@@ -773,8 +773,8 @@ body::after {
 }
 
 .svc-title {
-  font-family: var(--font-display);
-  font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(2.2rem, 4.8vw, 3.8rem);
   font-weight: 700;
   line-height: 1.04;
   letter-spacing: -0.04em;
