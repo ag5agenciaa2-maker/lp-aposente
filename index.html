@@ -487,7 +487,7 @@
         </div>
 
         <div class="svc-bottom reveal">
-          <p class="svc-bottom-note">+ Aposentadoria Especial, por Tempo de Contribuição, do Professor,<br>Auxílio-Acidente, Auxílio-Reclusão e mais.</p>
+          <p class="svc-bottom-note">Também atuamos com diversos outros benefícios do INSS.</p>
           <a href="#contato" class="svc-bottom-cta" data-scroll>Fale com um especialista <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
         </div>
       </div>
@@ -513,7 +513,8 @@
             <div class="edu-phone">
               <video class="edu-video" id="eduVideo" playsinline preload="none"></video>
               <button class="edu-play-btn" id="eduPlayBtn" aria-label="Play / Pause">
-                <svg viewBox="0 0 24 24" fill="none"><path d="M6 4.5L19.5 12 6 19.5V4.5Z" fill="currentColor"/></svg>
+                <svg class="edu-icon-play" viewBox="0 0 24 24" fill="none"><path d="M6 4.5L19.5 12 6 19.5V4.5Z" fill="currentColor"/></svg>
+                <svg class="edu-icon-pause" viewBox="0 0 24 24" fill="none"><rect x="5" y="4" width="4" height="16" rx="1" fill="currentColor"/><rect x="15" y="4" width="4" height="16" rx="1" fill="currentColor"/></svg>
               </button>
               <div class="edu-controls">
                 <button class="edu-ctrl" id="eduMuteBtn" aria-label="Ativar/desativar som">
@@ -760,7 +761,7 @@
                 <svg class="vi-icon-play" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M6 4.5L19.5 12 6 19.5V4.5Z" fill="currentColor"/>
                 </svg>
-                <svg class="vi-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                <svg class="vi-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
               </button>
             </div>
             <div class="vi-controls">
@@ -800,7 +801,7 @@
                 <svg class="vi-icon-play" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M6 4.5L19.5 12 6 19.5V4.5Z" fill="currentColor"/>
                 </svg>
-                <svg class="vi-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                <svg class="vi-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
               </button>
             </div>
             <div class="vi-controls">
@@ -1234,11 +1235,7 @@
           <button class="vdep-arrow" id="vdepPrev" aria-label="Anterior">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
           </button>
-          <div class="vdep-counter" aria-live="polite">
-            <span class="vdep-counter-cur" id="vdepCur">01</span>
-            <span class="vdep-counter-sep"></span>
-            <span class="vdep-counter-tot" id="vdepTot">05</span>
-          </div>
+          <div class="vdep-dots" id="vdepDots" aria-live="polite"></div>
           <button class="vdep-arrow" id="vdepNext" aria-label="Próximo">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
           </button>
@@ -1623,7 +1620,6 @@
           </div>
           <div class="wa-info">
             <span class="wa-name">Aposente Campo Grande</span>
-            <span class="wa-status-text">Online agora</span>
           </div>
         </div>
         <div id="wa-typing" class="wa-typing">

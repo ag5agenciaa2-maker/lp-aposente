@@ -409,15 +409,22 @@
   const track = document.getElementById('vdepTrack');
   const prev  = document.getElementById('vdepPrev');
   const next  = document.getElementById('vdepNext');
-  const curEl = document.getElementById('vdepCur');
-  const totEl = document.getElementById('vdepTot');
 
   if (!wrap || !track) return;
 
-  const cards = Array.from(track.querySelectorAll('.vdep-card'));
-  let current = 0;
+  const cards   = Array.from(track.querySelectorAll('.vdep-card'));
+  const dotsEl  = document.getElementById('vdepDots');
+  let current   = 0;
 
-  if (totEl) totEl.textContent = String(cards.length).padStart(2, '0');
+  // Gera dots
+  const dots = cards.map((_, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'vdep-dot';
+    btn.setAttribute('aria-label', `Ir para depoimento ${i + 1}`);
+    btn.addEventListener('click', () => { stopPlayingCards(); goTo(i); });
+    dotsEl && dotsEl.appendChild(btn);
+    return btn;
+  });
 
   function goTo(index) {
     current = Math.max(0, Math.min(index, cards.length - 1));
@@ -429,7 +436,7 @@
 
   function setActive(index) {
     cards.forEach((c, i) => c.classList.toggle('is-active', i === index));
-    if (curEl) curEl.textContent = String(index + 1).padStart(2, '0');
+    dots.forEach((d, i) => d.classList.toggle('is-active', i === index));
   }
 
   // Detecta card mais centrado após scroll
@@ -450,8 +457,16 @@
     });
   }, { passive: true });
 
-  prev.addEventListener('click', () => goTo(current - 1));
-  next.addEventListener('click', () => goTo(current + 1));
+  function stopPlayingCards() {
+    document.querySelectorAll('.vdep-card.vdep-playing').forEach(card => {
+      const v = card.querySelector('video[data-inline]');
+      if (v) { v.pause(); v.remove(); }
+      card.classList.remove('vdep-playing', 'vdep-sound', 'vdep-paused');
+    });
+  }
+
+  prev.addEventListener('click', () => { stopPlayingCards(); goTo(current - 1); });
+  next.addEventListener('click', () => { stopPlayingCards(); goTo(current + 1); });
 
   wrap.addEventListener('keydown', e => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
@@ -673,6 +688,17 @@ document.querySelectorAll('.vdep-thumb-video').forEach(v => {
   });
 
   video.addEventListener('ended', () => phone.classList.remove('is-playing'));
+
+  // pausa ao sair da seção
+  const section = document.getElementById('videos-educativos');
+  if (section) {
+    new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting && !video.paused) {
+        video.pause();
+        phone.classList.remove('is-playing');
+      }
+    }, { threshold: 0 }).observe(section);
+  }
 
   // ── botão mute ──
   const muteBtn   = document.getElementById('eduMuteBtn');
