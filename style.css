@@ -3921,7 +3921,7 @@ textarea.form-input {
   }
 
   .footer-grid {
-    grid-template-columns: 1.5fr 1fr 1.2fr;
+    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
   }
 }
 
