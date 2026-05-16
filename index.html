@@ -334,18 +334,18 @@
           <img src="Assets/aposente-fachada-placa-assessoria.webp" alt="Fachada da Aposente Campo Grande — Assessoria Previdenciária" class="hero-image" loading="eager" fetchpriority="high" width="720" height="900" />
           <div class="hero-video-frame">
             <video class="hero-video" id="hero-video" src="https://assets.cdn.filesafe.space/7hzaWcGgawCV1WudlwA7/media/6a0882e40a69f1e7669927f8.mp4" autoplay muted loop playsinline></video>
-            <button class="hero-sound-btn" id="heroSoundBtn" aria-label="Ativar som">
-              <svg class="hero-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
-              </svg>
-              <svg class="hero-icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-              </svg>
-            </button>
           </div>
+          <button class="hero-sound-btn" id="heroSoundBtn" aria-label="Ativar som">
+            <svg class="hero-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+            </svg>
+            <svg class="hero-icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            </svg>
+          </button>
           <div class="hero-overlay"></div>
           <div class="hero-gold-shape"></div>
         </div>
@@ -358,6 +358,17 @@
       <div class="hero-mobile-video">
         <div class="hero-mobile-video-frame">
           <video src="https://assets.cdn.filesafe.space/7hzaWcGgawCV1WudlwA7/media/6a0882e40a69f1e7669927f8.mp4" autoplay loop playsinline muted class="hero-mobile-video-el"></video>
+          <button class="hero-sound-btn hero-sound-btn--mobile" id="heroSoundBtnMobile" aria-label="Ativar som">
+            <svg class="hero-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+            </svg>
+            <svg class="hero-icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            </svg>
+          </button>
         </div>
       </div>
     </section>
@@ -740,6 +751,7 @@
 
           <div class="sobre-visual reveal">
             <div class="image-premium-wrapper">
+              <p class="sobre-img-caption"><span class="sobre-img-eyebrow">Nossa Essência</span><br>Expertise com Propósito</p>
               <div class="image-frame-magazine">
                 <img src="Assets/aposente-equipe-selfie-escritorio.webp" alt="Equipe Aposente Campo Grande" loading="lazy" />
                 <div class="frame-accent"></div>
@@ -1659,35 +1671,54 @@
         hero.querySelector('.hero-mobile-video-el')
       ].filter(Boolean);
 
-      // botão de som
-      const soundBtn   = document.getElementById('heroSoundBtn');
-      const iconMuted  = soundBtn && soundBtn.querySelector('.hero-icon-muted');
-      const iconSound  = soundBtn && soundBtn.querySelector('.hero-icon-sound');
-      if (soundBtn) {
-        soundBtn.addEventListener('click', () => {
-          const muted = !videos[0].muted;
-          // só tira o mute do vídeo visível — evita eco
+      // botões de som
+      let soundEnabled = false;
+      const soundBtns = document.querySelectorAll('.hero-sound-btn');
+      
+      soundBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          soundEnabled = !soundEnabled;
+          
           videos.forEach(v => {
-            v.muted = muted || (v.offsetParent === null);
+            // Verifica se o vídeo está visível de forma robusta
+            const isVisible = !!(v.offsetWidth || v.offsetHeight || v.getClientRects().length);
+            
+            if (isVisible) {
+              v.muted = !soundEnabled;
+              if (soundEnabled) {
+                v.play().catch(() => {});
+              }
+            } else {
+              v.muted = true;
+            }
           });
-          iconMuted.style.display = muted ? '' : 'none';
-          iconSound.style.display = muted ? 'none' : '';
-          soundBtn.setAttribute('aria-label', muted ? 'Ativar som' : 'Desativar som');
+          
+          // Atualiza todos os botões para refletir o estado global
+          soundBtns.forEach(b => {
+            const iMuted = b.querySelector('.hero-icon-muted');
+            const iSound = b.querySelector('.hero-icon-sound');
+            if (iMuted) iMuted.style.display = soundEnabled ? 'none' : '';
+            if (iSound) iSound.style.display = soundEnabled ? '' : 'none';
+            b.setAttribute('aria-label', soundEnabled ? 'Desativar som' : 'Ativar som');
+          });
         });
-      }
+      });
 
       const observer = new IntersectionObserver(
         ([entry]) => {
           videos.forEach(v => {
             if (entry.isIntersecting) {
               v.play().catch(() => {});
+              const isVisible = !!(v.offsetWidth || v.offsetHeight || v.getClientRects().length);
+              v.muted = !soundEnabled || !isVisible;
             } else {
               v.pause();
               v.currentTime = 0;
             }
           });
         },
-        { threshold: 0.2 }
+        { threshold: 0 }
       );
 
       observer.observe(hero);

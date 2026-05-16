@@ -617,6 +617,7 @@ body::after {
   max-height: 90%;
   z-index: 1;
   border-radius: 20px;
+  overflow: hidden;
   box-shadow:
     0 0 0 1px rgba(252, 212, 3, 0.1),
     0 12px 40px rgba(0, 0, 0, 0.3);
@@ -624,8 +625,8 @@ body::after {
 
 .hero-sound-btn {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
+  bottom: 20px;
+  right: 20px;
   z-index: 4;
   width: 36px;
   height: 36px;
@@ -710,10 +711,11 @@ body::after {
   padding: 0 20px 32px;
   margin-top: -40px;
   position: relative;
-  z-index: 2;
+  z-index: 20;
 }
 
 .hero-mobile-video-frame {
+  position: relative;
   width: 72%;
   aspect-ratio: 9 / 16;
   border-radius: 20px;
@@ -734,6 +736,20 @@ body::after {
 @media (min-width: 900px) {
   .hero-mobile-video {
     display: none;
+  }
+}
+
+/* Ajustes botão som mobile */
+@media (max-width: 900px) {
+  .hero-sound-btn--mobile {
+    bottom: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+  }
+  .hero-sound-btn--mobile svg {
+    width: 14px;
+    height: 14px;
   }
 }
 
@@ -1505,6 +1521,12 @@ body::after {
   color: var(--preto-justica);
 }
 
+@media (max-width: 768px) {
+  .section--sobre .section-header--left {
+    display: none;
+  }
+}
+
 .espaco-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -1736,6 +1758,36 @@ body::after {
   position: relative;
   padding-right: 40px;
   padding-bottom: 40px;
+}
+
+.sobre-img-caption {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sobre-img-caption {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: var(--preto-justica);
+    text-align: left;
+    margin-bottom: 38px;
+    letter-spacing: 0.01em;
+    line-height: 0.85;
+  }
+
+  .sobre-img-eyebrow {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--dourado);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0;
+    line-height: 1.2;
+  }
 }
 
 .image-frame-magazine {
