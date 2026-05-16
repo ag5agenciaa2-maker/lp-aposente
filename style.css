@@ -1037,7 +1037,7 @@ body::after {
 @media (min-width: 660px) {
   .svc-grid { grid-template-columns: repeat(2, 1fr); }
   .svc-intro-row { grid-template-columns: 1fr 1fr; gap: 48px; }
-  .svc-bottom { flex-direction: row; align-items: center; justify-content: space-between; }
+  .svc-bottom { flex-direction: row; align-items: flex-start; justify-content: space-between; }
 }
 
 @media (min-width: 1024px) {
