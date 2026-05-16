@@ -278,7 +278,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="cookie-banner.css" />
   <link rel="icon" type="image/x-icon" href="Assets/favicon-aposente.ico">
@@ -334,6 +334,17 @@
           <img src="Assets/aposente-fachada-placa-assessoria.webp" alt="Fachada da Aposente Campo Grande — Assessoria Previdenciária" class="hero-image" loading="eager" fetchpriority="high" width="720" height="900" />
           <div class="hero-video-frame">
             <video class="hero-video" id="hero-video" src="https://assets.cdn.filesafe.space/7hzaWcGgawCV1WudlwA7/media/6a0882e40a69f1e7669927f8.mp4" autoplay muted loop playsinline></video>
+            <button class="hero-sound-btn" id="heroSoundBtn" aria-label="Ativar som">
+              <svg class="hero-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+              </svg>
+              <svg class="hero-icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            </button>
           </div>
           <div class="hero-overlay"></div>
           <div class="hero-gold-shape"></div>
@@ -1619,7 +1630,6 @@
           </div>
           <div class="wa-info">
             <span class="wa-name">Aposente Campo Grande</span>
-            <span class="wa-status-text">Online agora</span>
           </div>
         </div>
         <div id="wa-typing" class="wa-typing">
@@ -1649,6 +1659,23 @@
         hero.querySelector('.hero-mobile-video-el')
       ].filter(Boolean);
 
+      // botão de som
+      const soundBtn   = document.getElementById('heroSoundBtn');
+      const iconMuted  = soundBtn && soundBtn.querySelector('.hero-icon-muted');
+      const iconSound  = soundBtn && soundBtn.querySelector('.hero-icon-sound');
+      if (soundBtn) {
+        soundBtn.addEventListener('click', () => {
+          const muted = !videos[0].muted;
+          // só tira o mute do vídeo visível — evita eco
+          videos.forEach(v => {
+            v.muted = muted || (v.offsetParent === null);
+          });
+          iconMuted.style.display = muted ? '' : 'none';
+          iconSound.style.display = muted ? 'none' : '';
+          soundBtn.setAttribute('aria-label', muted ? 'Ativar som' : 'Desativar som');
+        });
+      }
+
       const observer = new IntersectionObserver(
         ([entry]) => {
           videos.forEach(v => {
@@ -1656,6 +1683,7 @@
               v.play().catch(() => {});
             } else {
               v.pause();
+              v.currentTime = 0;
             }
           });
         },
