@@ -807,39 +807,6 @@ document.querySelectorAll('.vdep-thumb-video').forEach(v => {
   });
 })();
 
-// ====== WHATSAPP PREMIUM (AG5 V2) ======
-(function initWaPremium() {
-  const bubble   = document.getElementById('wa-message-bubble');
-  const typing   = document.getElementById('wa-typing');
-  const realMsg  = document.getElementById('wa-real-message');
-  const badge    = document.getElementById('wa-notification');
-  const closeBtn = document.getElementById('wa-close-btn');
-  const mainBtn  = document.getElementById('wa-main-btn');
-
-  if (!bubble) return;
-
-  // Exibe o balão após 6 s, mostra mensagem real após mais 2,5 s de "digitação"
-  setTimeout(() => {
-    bubble.classList.add('show');
-    setTimeout(() => {
-      if (typing) typing.style.display = 'none';
-      if (realMsg) realMsg.style.display = 'block';
-    }, 2500);
-  }, 6000);
-
-  // Fechar balão → badge aparece após 2 s para manter engajamento
-  closeBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    bubble.classList.remove('show');
-    setTimeout(() => { badge.classList.add('show'); }, 2000);
-  });
-
-  // Clicar no botão principal remove tudo
-  mainBtn.addEventListener('click', () => {
-    bubble.classList.remove('show');
-    badge.classList.remove('show');
-  });
-})();
 
 /* ====== VÍDEOS INSTITUCIONAIS — pausa ao sair da seção ====== */
 const viSection = document.getElementById('videos-institucionais');
@@ -915,3 +882,88 @@ document.querySelectorAll('.vi-card-video-wrap').forEach((wrap) => {
   });
 });
 
+
+/* ──────────────────────────────────────────────
+   WHATSAPP PREMIUM — Balão flutuante (espelho Lumina LP)
+   Timeline:
+     • t=0s  → usuário chega na 3ª seção (#videos-depoimentos), botão verde aparece
+     • t=25s → balão sobe ("digitando..." → mensagem real)
+     • t=40s → balão some (15s exibido)
+     • t=45s → badge vermelho "1" aparece
+─────────────────────────────────────────────── */
+(function initWaPremium() {
+  const bubble        = document.getElementById('wa-message-bubble');
+  const typing        = document.getElementById('wa-typing');
+  const realMessage   = document.getElementById('wa-real-message');
+  const badge         = document.getElementById('wa-notification');
+  const closeBtn      = document.getElementById('wa-close-btn');
+  const mainBtn       = document.getElementById('wa-main-btn');
+  const targetSection = document.getElementById('videos-depoimentos'); // 3ª seção da LP Aposente
+
+  if (!bubble || !typing || !realMessage || !badge || !closeBtn || !mainBtn || !targetSection) return;
+
+  const DELAY_BALAO            = 25000; // 25s após entrar na seção
+  const DURATION_TYPING        = 2500;  // 2.5s de "digitando..." antes da mensagem
+  const DURATION_BALAO_VISIVEL = 15000; // 15s exibido depois de aparecer
+  const DELAY_BADGE_APOS_SUMIR = 5000;  // 5s após sumir → badge
+
+  let triggered = false;
+  let autoHideTimer = null;
+  let badgeTimer = null;
+  let userClosed = false;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !triggered) {
+        triggered = true;
+
+        // Botão aparece imediatamente
+        mainBtn.classList.add('visible');
+
+        // Balão sobe após 25s
+        setTimeout(() => {
+          if (userClosed) return;
+          bubble.classList.add('show');
+
+          // 2.5s de "digitando..." → mensagem real
+          setTimeout(() => {
+            if (userClosed) return;
+            typing.classList.add('is-hidden');
+            realMessage.classList.add('is-visible');
+            requestAnimationFrame(() => realMessage.classList.add('is-in'));
+          }, DURATION_TYPING);
+
+          // 15s depois → balão some automaticamente
+          autoHideTimer = setTimeout(() => {
+            if (userClosed) return;
+            bubble.classList.remove('show');
+
+            // 5s depois → badge "1" aparece
+            badgeTimer = setTimeout(() => {
+              if (userClosed) return;
+              badge.classList.add('show');
+            }, DELAY_BADGE_APOS_SUMIR);
+          }, DURATION_BALAO_VISIVEL);
+        }, DELAY_BALAO);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  observer.observe(targetSection);
+
+  closeBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    userClosed = true;
+    bubble.classList.remove('show');
+    if (autoHideTimer) clearTimeout(autoHideTimer);
+    if (badgeTimer) clearTimeout(badgeTimer);
+    setTimeout(() => { badge.classList.add('show'); }, DELAY_BADGE_APOS_SUMIR);
+  });
+
+  mainBtn.addEventListener('click', () => {
+    bubble.classList.remove('show');
+    badge.classList.remove('show');
+    if (autoHideTimer) clearTimeout(autoHideTimer);
+    if (badgeTimer) clearTimeout(badgeTimer);
+  });
+})();
