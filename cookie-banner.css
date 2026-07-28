@@ -1,7 +1,7 @@
 :root {
     /* ── Variáveis Customizáveis do Projeto (Flexíveis) ── */
     --ck-bg: #0a0a0a;                    /* Fundo escuro (Preto Justiça, tom principal escuro do projeto) */
-    --ck-accent: #fcd403;                /* Tom de destaque (Dourado oficial Aposente) */
+    --ck-accent: #fcd403;                /* Tom de destaque (Dourado oficial Nobre e Frazão Aposente) */
     --ck-accent-dark: #c9a900;           /* Tom de destaque hover */
     --ck-accent-rgb: 252, 212, 3;        /* RGB para transparências */
     --ck-text-light: #f6f1e8;            /* Texto claro principal */

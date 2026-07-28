@@ -376,7 +376,7 @@
     texto += `- Benefício de interesse: ${beneficio.value}`;
     if (situacao) texto += `\n- Situação do caso: ${situacao}`;
 
-    const url = `https://wa.me/5521971168856?text=${encodeURIComponent(texto)}`;
+    const url = `https://wa.me/5521996144719?text=${encodeURIComponent(texto)}`;
 
     // Feedback visual antes de redirecionar
     form.classList.add('hidden');
@@ -898,7 +898,7 @@ document.querySelectorAll('.vi-card-video-wrap').forEach((wrap) => {
   const badge         = document.getElementById('wa-notification');
   const closeBtn      = document.getElementById('wa-close-btn');
   const mainBtn       = document.getElementById('wa-main-btn');
-  const targetSection = document.getElementById('videos-depoimentos'); // 3ª seção da LP Aposente
+  const targetSection = document.getElementById('videos-depoimentos'); // 3ª seção da LP Nobre e Frazão Aposente
 
   if (!bubble || !typing || !realMessage || !badge || !closeBtn || !mainBtn || !targetSection) return;
 
